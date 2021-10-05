@@ -1,5 +1,6 @@
 import React from 'react';
 import { CartContext } from '../utils/CartContext';
+import axios from 'axios';
 
 function Cart() {
   const [cartItems, setCartItems] = React.useContext(CartContext);
@@ -8,7 +9,7 @@ function Cart() {
   const shippingPrice = itemsPrice > 10000 ? 0 : 200;
   const totalPrice = itemsPrice + taxPrice + shippingPrice;
 
-  const onAdd = (product) => {
+  const updatecart = (product) => {
     const exist = cartItems.find((x) => x.id === product.id);
     if (exist) {
       setCartItems(
@@ -20,6 +21,20 @@ function Cart() {
       setCartItems([...cartItems, { ...product, qty: 1 }]);
     }
   };
+
+  async function tryAdding(item, itemQty) {
+    const { data } = await axios.get(
+      `http://localhost:8000/products/api/products/${item.slug}`
+    );
+    //there's one in the cart already
+    if (data.quantity < itemQty + 1) {
+      window.alert(`Maximum quantity available is ${data.quantity}`);
+      return;
+    } else {
+      updatecart(item);
+    }
+  }
+
   const onRemove = (product) => {
     const exist = cartItems.find((x) => x.id === product.id);
     if (exist.qty === 1) {
@@ -52,9 +67,15 @@ function Cart() {
               <button onClick={() => onRemove(item)} className="remove">
                 -
               </button>{' '}
-              <button onClick={() => onAdd(item)} className="add">
+              {/* {tryAdding(item) ? ( */}
+              <button onClick={() => tryAdding(item, item.qty)} className="add">
                 +
               </button>
+              {/* ) : (
+                <button className="add" disabled>
+                  +
+                </button>
+              )} */}
             </div>
 
             <div className="col-2 text-right">

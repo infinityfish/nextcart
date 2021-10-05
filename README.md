@@ -16,6 +16,13 @@ AppBar
 #Image: next/Image
 add domain to next.config.js
 
+Activate the virtual environment.
+
+```bash
+$ source venv/bin/activate
+(windows) venv\Scripts\activate
+```
+
 #Formik Material UI
 https://formik.org/docs/examples/with-material-ui
 

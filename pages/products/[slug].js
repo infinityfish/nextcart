@@ -8,18 +8,15 @@ function product({ product }) {
   // const { slug } = router.query;
 
   const onAdd = (product) => {
-    console.log(cartItems);
+    // Cannot add more than quantity of 1
     const exist = cartItems.find((x) => x.id === product.id);
     if (exist) {
-      setCartItems(
-        cartItems.map((x) =>
-          x.id === product.id ? { ...exist, qty: exist.qty + 1 } : x
-        )
-      );
+      return cartItems;
     } else {
       setCartItems([...cartItems, { ...product, qty: 1 }]);
     }
   };
+
   return (
     <div>
       <p>
