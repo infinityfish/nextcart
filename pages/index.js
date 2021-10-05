@@ -6,7 +6,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import { CartContext } from '../utils/CartContext';
 
-function Home(props) {
+function Home() {
   const [cartItems, setCartItems] = React.useContext(CartContext);
   const { isLoading, error, data } = useQuery('productsListData', () =>
     fetch('http://localhost:8000/products/api/products/').then((res) =>
@@ -35,7 +35,7 @@ function Home(props) {
       <div className="row">
         {data.map((product) => (
           <div key={product.slug}>
-            <Link href={`/${product.slug}`}>
+            <Link href={`/products/${product.slug}`}>
               <p>
                 {product.name} ${product.price}
               </p>

@@ -1,20 +1,11 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
-import { CartContext } from '../utils/CartContext';
+import { CartContext } from '../../utils/CartContext';
 
-function product() {
+function product({ product }) {
   const [cartItems, setCartItems] = React.useContext(CartContext);
   const router = useRouter();
-  const { slug } = router.query;
-
-  // const { isLoading, error, data } = useQuery('product', () =>
-  //   fetch(`http://localhost:8000/products/api/products/${slug}`).then((res) =>
-  //     res.json()
-  //   )
-  // );
-  // if (isLoading) return 'Loading...';
-  // if (error) return 'An error has occurred: ' + error.message;
+  // const { slug } = router.query;
 
   const onAdd = (product) => {
     console.log(cartItems);
@@ -32,15 +23,25 @@ function product() {
   return (
     <div>
       <p>
-        {' '}
-        {data.name} ${data.price} Qty in Stock: {data.quantity}
+        {product.name} ${product.price} Qty in Stock: {product.quantity}
       </p>
-      <p>{data.description}</p>
+      <p>{product.description}</p>
       <button onClick={() => router.back()}>Continue Shopping</button>
       {'  '}
       <button onClick={() => onAdd(product)}>Add To Cart</button>
     </div>
   );
+}
+
+// This also gets called at build time
+export async function getStaticProps({ params }) {
+  const res = await fetch(
+    `http://localhost:8000/products/api/products/${params.slug}`
+  );
+  const product = await res.json();
+
+  // Pass product data to the page via props
+  return { props: { product } };
 }
 
 // This function gets called at build time
@@ -57,16 +58,5 @@ export async function getStaticPaths() {
   // We'll pre-render only these paths at build time.
   // { fallback: false } means other routes should 404.
   return { paths, fallback: false };
-}
-
-// This also gets called at build time
-export async function getStaticProps({ params }) {
-  const res = await fetch(
-    `http://localhost:8000/products/api/products/${params.slug}`
-  );
-  const data = await res.json();
-
-  // Pass product data to the page via props
-  return { props: { data } };
 }
 export default product;

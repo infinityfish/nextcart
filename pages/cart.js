@@ -4,7 +4,7 @@ import { CartContext } from '../utils/CartContext';
 function Cart() {
   const [cartItems, setCartItems] = React.useContext(CartContext);
   const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.price, 0);
-  const taxPrice = itemsPrice * 0.07;
+  const taxPrice = itemsPrice * 0.075;
   const shippingPrice = itemsPrice > 10000 ? 0 : 200;
   const totalPrice = itemsPrice + taxPrice + shippingPrice;
 
