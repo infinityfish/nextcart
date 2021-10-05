@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
-
+import Link from 'next/link';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { CartContext } from '../utils/CartContext';
@@ -35,7 +35,12 @@ function Home(props) {
       <div className="row">
         {data.map((product) => (
           <div key={product.slug}>
-            {product.name} ${product.price}
+            <Link href={`/${product.slug}`}>
+              <p>
+                {product.name} ${product.price}
+              </p>
+            </Link>
+
             <button onClick={() => onAdd(product)}>Add To Cart</button>
           </div>
         ))}

@@ -58,11 +58,7 @@ function Cart() {
             </div>
 
             <div className="col-2 text-right">
-              {item.qty} x ₦
-              {item.price.toLocaleString('en-US', {
-                style: 'decimal',
-                minimumFractionDigits: 2,
-              })}
+              {item.qty} x ₦{item.price}
             </div>
           </div>
         ))}
@@ -72,33 +68,15 @@ function Cart() {
             <hr></hr>
             <div className="row">
               <div className="col-2">Items Price</div>
-              <div className="col-1 text-right">
-                ₦
-                {itemsPrice.toLocaleString('en-US', {
-                  style: 'decimal',
-                  minimumFractionDigits: 2,
-                })}
-              </div>
+              <div className="col-1 text-right">₦{itemsPrice}</div>
             </div>
             <div className="row">
               <div className="col-2">Tax Price</div>
-              <div className="col-1 text-right">
-                ₦
-                {taxPrice.toLocaleString('en-US', {
-                  style: 'decimal',
-                  minimumFractionDigits: 2,
-                })}
-              </div>
+              <div className="col-1 text-right">₦{taxPrice}</div>
             </div>
             <div className="row">
               <div className="col-2">Shipping Price</div>
-              <div className="col-1 text-right">
-                ₦
-                {shippingPrice.toLocaleString('en-US', {
-                  style: 'decimal',
-                  minimumFractionDigits: 2,
-                })}
-              </div>
+              <div className="col-1 text-right">₦{shippingPrice}</div>
             </div>
 
             <div className="row">
@@ -106,13 +84,7 @@ function Cart() {
                 <strong>Total Price</strong>
               </div>
               <div className="col-1 text-right">
-                <strong>
-                  ₦
-                  {totalPrice.toLocaleString('en-US', {
-                    style: 'decimal',
-                    minimumFractionDigits: 2,
-                  })}
-                </strong>
+                <strong>₦{totalPrice}</strong>
               </div>
             </div>
             <hr />
