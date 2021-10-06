@@ -1,12 +1,12 @@
 import React from 'react';
 
-import FBLogin2 from '../components/FBLogin2';
+import FBLogin from '../components/FBLogin';
 import GLogin from '../components/GLogin';
 
 function login() {
   return (
     <div>
-      <FBLogin2 /> <GLogin />
+      <FBLogin /> <GLogin />
     </div>
   );
 }

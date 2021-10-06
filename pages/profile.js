@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { CartContext } from '../utils/CartContext';
 import { useRouter } from 'next/router';
@@ -6,16 +6,18 @@ import axios from '../utils/axios';
 
 function profile() {
   const router = useRouter();
-  const [loggedIn, setLoggedIn] = React.useContext(CartContext);
 
-  React.useEffect(() => {
+  const [loggedIn, setLoggedIn, userProfile, setUserProfile] =
+    useContext(CartContext);
+
+  useEffect(() => {
     const accessKey = window.localStorage.getItem('nextAuthToken');
     const email = window.localStorage.getItem('nextAuthEmail');
     // const data = fromStorage && JSON.parse(fromStorage);
     if (accessKey !== null) {
       // get to api to get profile
       // console.log(accessKey);
-      getProfile(accessKey, email).then((res) => console.log(res));
+      getProfile(accessKey, email);
     }
   }, []);
 
@@ -35,14 +37,17 @@ function profile() {
         console.log(res.status);
       }
       // Don't forget to return something
+      // console.log(res.data);
+
       console.log(res.data);
-      return res.data;
     } catch (err) {
       console.error(err);
     }
   }
   return (
     <div>
+      <h3>User Profile </h3>
+      <p></p>
       {loggedIn === null ? (
         <button onClick={() => logOut()}>Log in</button>
       ) : (

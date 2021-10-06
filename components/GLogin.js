@@ -8,6 +8,7 @@ function GLogin() {
   const [loggedIn, setLoggedIn] = React.useContext(CartContext);
 
   const responseGoogle = (response) => {
+    console.log(response);
     console.log(response.accessToken);
     console.log(response.profileObj.email);
     const email = response.profileObj.email;

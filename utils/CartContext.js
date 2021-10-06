@@ -5,6 +5,7 @@ export const CartContext = React.createContext();
 export const CartProvider = (props) => {
   const [cartItems, setCartItems] = useState([]);
   const [loggedIn, setLoggedIn] = useState(null);
+  const [userProfile, setUserProfile] = useState('');
 
   //cart
   useEffect(() => {
@@ -34,9 +35,30 @@ export const CartProvider = (props) => {
     window.localStorage.setItem('nextAuthToken', loggedIn);
   }, [loggedIn]);
 
+  //UserProfile
+  useEffect(() => {
+    const fromStorage = window.localStorage.getItem('nextUserProfile');
+    // const data = fromStorage && JSON.parse(fromStorage);
+    if (fromStorage) {
+      setUserProfile(fromStorage);
+    }
+  }, []);
+
+  useEffect(() => {
+    // const data = JSON.stringify(loggedIn);
+    window.localStorage.setItem('nextUserProfile', userProfile);
+  }, [userProfile]);
+
   return (
     <CartContext.Provider
-      value={[cartItems, setCartItems, loggedIn, setLoggedIn]}
+      value={[
+        cartItems,
+        setCartItems,
+        loggedIn,
+        setLoggedIn,
+        userProfile,
+        setUserProfile,
+      ]}
     >
       {props.children}
     </CartContext.Provider>
