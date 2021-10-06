@@ -21,7 +21,7 @@ function profile() {
   async function getProfile(accessKey) {
     try {
       let res = await axios({
-        url: 'http://localhost:8000/profile/<user>',
+        url: 'http://localhost:8000/profile/',
         method: 'get',
         timeout: 5000,
         headers: {
