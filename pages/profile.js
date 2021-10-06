@@ -10,18 +10,19 @@ function profile() {
 
   React.useEffect(() => {
     const accessKey = window.localStorage.getItem('nextAuthToken');
+    const email = window.localStorage.getItem('nextAuthEmail');
     // const data = fromStorage && JSON.parse(fromStorage);
     if (accessKey !== null) {
       // get to api to get profile
-      console.log(accessKey);
-      getProfile(accessKey).then((res) => console.log(res));
+      // console.log(accessKey);
+      getProfile(accessKey, email).then((res) => console.log(res));
     }
   }, []);
 
-  async function getProfile(accessKey) {
+  async function getProfile(accessKey, email) {
     try {
       let res = await axios({
-        url: 'http://localhost:8000/profile/',
+        url: `http://localhost:8000/profile/${email}`,
         method: 'get',
         timeout: 5000,
         headers: {
@@ -34,6 +35,7 @@ function profile() {
         console.log(res.status);
       }
       // Don't forget to return something
+      console.log(res.data);
       return res.data;
     } catch (err) {
       console.error(err);

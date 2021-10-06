@@ -9,6 +9,8 @@ function GLogin() {
 
   const responseGoogle = (response) => {
     console.log(response.accessToken);
+    console.log(response.profileObj.email);
+    const email = response.profileObj.email;
     axios
       .post('/dj-rest-auth/google/', {
         access_token: response.accessToken,
@@ -18,6 +20,7 @@ function GLogin() {
 
         window.alert(`Django sent this key: ${response.data.key}`);
         window.localStorage.setItem('nextAuthToken', response.data.key);
+        window.localStorage.setItem('nextAuthEmail', email);
       })
       .catch(function (error) {
         console.log(error);
