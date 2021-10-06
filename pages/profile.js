@@ -7,19 +7,21 @@ import axios from '../utils/axios';
 function profile() {
   const router = useRouter();
 
-  const [loggedIn, setLoggedIn, userProfile, setUserProfile] =
-    useContext(CartContext);
+  const [loggedIn, setLoggedIn] = useContext(CartContext);
+  const [profileEmail, setProfileEmail] = React.useState('');
 
   useEffect(() => {
     const accessKey = window.localStorage.getItem('nextAuthToken');
     const email = window.localStorage.getItem('nextAuthEmail');
-    // const data = fromStorage && JSON.parse(fromStorage);
+    setProfileEmail(email);
     if (accessKey !== null) {
       // get to api to get profile
       // console.log(accessKey);
       getProfile(accessKey, email);
     }
   }, []);
+
+  // run a second useEffect to get the LocalStorage info
 
   async function getProfile(accessKey, email) {
     try {
@@ -40,6 +42,7 @@ function profile() {
       // console.log(res.data);
 
       console.log(res.data);
+      return res.data;
     } catch (err) {
       console.error(err);
     }
@@ -47,7 +50,7 @@ function profile() {
   return (
     <div>
       <h3>User Profile </h3>
-      <p></p>
+      <p>{profileEmail}</p>
       {loggedIn === null ? (
         <button onClick={() => logOut()}>Log in</button>
       ) : (
