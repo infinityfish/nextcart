@@ -16,10 +16,8 @@ export default class FBLogin extends Component {
         //django validates access token with facebook, and then sends us a key
         // console.log(response.data.key);
 
-        //set globalstate here now
-
-        window.alert(`Django sent this key: ${response.data.key} and is `);
-        window.localStorage.setItem('nextAuthToken', 'authorizedUser');
+        window.alert(`Django sent this key: ${response.data.key}`);
+        window.localStorage.setItem('nextAuthToken', response.data.key);
       })
       .catch(function (error) {
         console.log(error);

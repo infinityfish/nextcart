@@ -1,5 +1,6 @@
 import React from 'react';
 import GoogleLogin from 'react-google-login';
+import axios from '../utils/axios';
 
 import { CartContext } from '../utils/CartContext';
 
@@ -8,10 +9,24 @@ function GLogin() {
 
   const responseGoogle = (response) => {
     console.log(response.accessToken);
-    setLoggedIn('authorizedUser');
-    window.alert(
-      `Google sent this accessToken: ${response.accessToken} and is ${loggedIn}`
-    );
+    axios
+      .post('/dj-rest-auth/google/', {
+        access_token: response.accessToken,
+      })
+      .then(function (response) {
+        console.log(response);
+
+        window.alert(`Django sent this key: ${response.data.key}`);
+        window.localStorage.setItem('nextAuthToken', response.data.key);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    // console.log(response.accessToken);
+    // setLoggedIn('authorizedUser');
+    // window.alert(
+    //   `Google sent this accessToken: ${response.accessToken} and is ${loggedIn}`
+    // );
   };
   return (
     <div>
