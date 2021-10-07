@@ -1,8 +1,9 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-// import Button from '@material-ui/core/Button';
-// import TextField from '@material-ui/core/TextField';
+
+import { OrderSubmit, cartOrderInfo } from './OrderSubmit';
+
 import {
   makeStyles,
   Card,
@@ -45,7 +46,7 @@ const validationSchema = yup.object({
   delivery_option: yup.string().min(3),
 });
 
-const placeorder = () => {
+const OrderForm = () => {
   const styles = useStyles();
   const formik = useFormik({
     initialValues: {
@@ -57,6 +58,9 @@ const placeorder = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      const orderData = { ...cartOrderInfo, ...values };
+      const accessKey = window.localStorage.getItem('nextAuthToken');
+      OrderSubmit(orderData, accessKey);
       alert(JSON.stringify(values, null, 2));
     },
   });
@@ -66,6 +70,8 @@ const placeorder = () => {
       <form onSubmit={formik.handleSubmit}>
         <Card className={styles.card}>
           <CardContent className={styles.cardContent}>
+            <h4>CheckOut Form</h4>
+
             <p>
               <TextField
                 label="Enter receiver Phone Number"
@@ -208,6 +214,7 @@ const useStyles = makeStyles((theme) => ({
   },
   actions: {
     justifyContent: 'center',
+    alignItems: 'center',
   },
 }));
-export default placeorder;
+export default OrderForm;
