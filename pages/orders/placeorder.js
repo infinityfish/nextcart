@@ -207,7 +207,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   actions: {
-    float: 'left',
+    justifyContent: 'center',
   },
 }));
 export default placeorder;
