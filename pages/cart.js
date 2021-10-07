@@ -1,10 +1,11 @@
 import React from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { CartContext } from '../utils/CartContext';
 
-import OrderForm from '../components/OrderForm';
-
 function Cart() {
+  const router = useRouter();
   const [cartItems, setCartItems] = React.useContext(CartContext);
   const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.price, 0);
   const taxPrice = itemsPrice * 0.075;
@@ -113,9 +114,11 @@ function Cart() {
               </div>
             </div>
             <hr />
+
             <div className="row">
-              <button onClick={() => setShouldShow(true)}>Checkout</button>
-              {shouldShow ? <OrderForm /> : 'Button for checkout'}
+              <button onClick={() => router.push('/checkout')}>
+                Navigate to Checkout
+              </button>
             </div>
           </>
         )}
