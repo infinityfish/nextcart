@@ -1,6 +1,8 @@
 import React from 'react';
-import { CartContext } from '../utils/CartContext';
 import axios from 'axios';
+import { CartContext } from '../utils/CartContext';
+
+import OrderForm from '../components/OrderForm';
 
 function Cart() {
   const [cartItems, setCartItems] = React.useContext(CartContext);
@@ -47,6 +49,8 @@ function Cart() {
       );
     }
   };
+
+  const [shouldShow, setShouldShow] = React.useState(false);
 
   return (
     <div>
@@ -110,15 +114,26 @@ function Cart() {
             </div>
             <hr />
             <div className="row">
-              <button onClick={() => alert('Check Coming Soon!')}>
-                Checkout
-              </button>
+              <button onClick={() => setShouldShow(true)}>Checkout</button>
+              {shouldShow ? <OrderForm /> : 'Button for checkout'}
             </div>
           </>
         )}
       </div>
+      <div></div>
     </div>
   );
 }
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 export default Cart;
